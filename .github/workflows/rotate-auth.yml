@@ -10,9 +10,14 @@ jobs:
 
     steps:
     - run: |
+        repo="${github_repo////_}"
+        echo "::set-env name=repo::$repo"
+      env:
+        github_repo: ${{ github.repository }}
+    - run: |
         curl \
         -XPOST \
         -u "tbrand-aa:${{ secrets.PA_TOKEN }}" \
         -H "Accept: application/vnd.github.everest-preview+json" \
         -H "Content-Type: application/json" https://api.github.com/repos/tbrand-aa/pipeline-base/dispatches \
-        --data '{"event_type": "mic-rotate-auth", "client_payload": { "environment": "acceptance", "cluster": "pipeline-tester " }}'
+        --data '{"event_type": "mic-rotate-auth_${{ env.repo }}", "client_payload": { "environment": "acceptance", "cluster": "pipeline-tester " }}'
