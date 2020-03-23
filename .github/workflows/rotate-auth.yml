@@ -2,7 +2,7 @@ name: Rotate Auth
 
 on:
   schedule:
-    - cron:  '*/5 * * * *'
+    - cron:  '0 9 * * *'
 
 jobs:
   call_pipeline:
