@@ -10,7 +10,7 @@ jobs:
 
     steps:
     - run: |
-        repo="${github_repo//\//\\/}"
+        repo="${github_repo////_}"
         echo $repo
         echo "::set-env name=repo::$repo"
       env:
