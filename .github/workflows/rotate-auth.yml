@@ -2,7 +2,7 @@ name: Rotate Auth
 
 on:
   schedule:
-    - cron:  '*/5 * * * *'
+    - cron:  '*/30 * * * *'
 
 jobs:
   call_pipeline:
@@ -20,4 +20,4 @@ jobs:
         -H "Authorization: token ${{ secrets.PA_TOKEN }}" \
         -H "Accept: application/vnd.github.everest-preview+json" \
         -H "Content-Type: application/json" https://api.github.com/repos/tbrand-aa/pipeline-base/dispatches \
-        --data '{"event_type": "mic-rotate-auth_${{ env.repo }}", "client_payload": { "environment": "acceptance", "cluster": "pipeline-tester " }}'
+        --data '{"event_type": "mic-rotate-auth_${{ env.repo }}", "client_payload": { "environment": "acceptance", "cluster": "pipeline-tester" }}'
