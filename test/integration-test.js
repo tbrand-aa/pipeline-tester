@@ -37,6 +37,6 @@ describe('Integration test', () => {
   })
 
   it('Test should succeed.', () => {
-    expect(true).be.true()
+    expect(true).be.false()
   })
 })
