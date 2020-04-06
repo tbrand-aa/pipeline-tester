@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "lab -v --timeout 1800000"
+    "test": "lab -c -r console -o stdout -r junit -o testresults/junit.xml -r html -o testresults/result.html -r clover -o testresults/clover.xml -r json -o testresults/result.json -r tap -o testresults/result.tap -v --timeout 1800000"
   },
   "keywords": [],
   "author": "",
