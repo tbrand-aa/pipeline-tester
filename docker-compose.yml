@@ -1,0 +1,38 @@
+version: '3.7'
+
+services:
+  db: 
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_ROOT_PASSWORD: postgres
+      POSTGRES_MODE: primary
+      POSTGRES_PRIMARY_USER: postgres
+      POSTGRES_PRIMARY_PASSWORD: postgres
+      POSTGRES_PRIMARY_HOST: localhost
+      POSTGRES_PRIMARY_PORT: 5432
+      POSTGRES_DATABASE: syncope
+      POSTGRES_USER: syncope
+      POSTGRES_PASSWORD: syncope
+
+  syncope: 
+    depends_on:
+      - db
+    image: apache/syncope:2.1.5
+    restart: always
+    environment:
+      DBMS: postgresql
+      DB_URL: jdbc:postgresql://db:5432/syncope
+      DB_USER: syncope
+      DB_PASSWORD: syncope
+      DB_POOL_MAX: 10
+      DB_POOL_MIN: 2
+      OPENJPA_REMOTE_COMMIT: sjvm
+
+  node:
+    depends_on:
+      - syncope 
+    image: node:10
+    volumes:
+      - ./:/app
+      - ./entrypoint.sh:/usr/local/bin/docker-entrypoint.sh
