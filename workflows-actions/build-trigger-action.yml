@@ -1,0 +1,26 @@
+name: 'Trigger build action'
+description: 'Triggering the build repo action'
+inputs:
+  event-type:
+    description: 'Who to greet'
+    required: true
+    default: 'World'
+  environment:
+    description: 'The target environment'
+    required: true
+  repository-name:
+    description: 'The full name of the repository'
+    required: true
+  repository-sha:
+    description: 'The SHA of the repository'
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - run: echo github_repo ${{ github.repository }}.
+      shell: bash
+    - id: random-number-generator
+      run: echo "::set-output name=random-id::$(echo $RANDOM)"
+      shell: bash
+    - run: ${{ github.action_path }}/goodbye.sh
+      shell: bash

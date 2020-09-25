@@ -2,7 +2,14 @@ name: Build
 
 on:
   push:
-    branches: [ master ]
+    branches:
+      - master
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - ready_for_review
 
 jobs:
   call_pipeline:
@@ -14,10 +21,17 @@ jobs:
         echo "::set-env name=repo::$repo"
       env:
         github_repo: ${{ github.repository }}
-    - run: |
-        curl \
-        -XPOST \
-        -H "Authorization: token ${{ secrets.PA_TOKEN }}" \
-        -H "Accept: application/vnd.github.everest-preview+json" \
-        -H "Content-Type: application/json" https://api.github.com/repos/tbrand-aa/pipeline-base/dispatches \
-        --data '{"event_type": "integration-test_${{ env.repo }}", "client_payload": { "environment": "acceptance", "repository_name": "${{ github.repository }}", "repository_sha": "${{ github.sha }}"  }}'
+    - id: trigger-action
+        uses: ../workflow-actions/build-trigger-action.yml
+        with:
+          event-type: 'integration-test_${{ env.repo }}'
+          environment: 'acceptance'
+          repository-name: ${{ github.repository }}
+          repository-sha: ${{ github.sha }}
+#    - run: |
+#        curl \
+#        -XPOST \
+#        -H "Authorization: token ${{ secrets.PA_TOKEN }}" \
+#        -H "Accept: application/vnd.github.everest-preview+json" \
+#        -H "Content-Type: application/json" https://api.github.com/repos/tbrand-aa/pipeline-base/dispatches \
+#        --data '{"event_type": "integration-test_${{ env.repo }}", "client_payload": { "environment": "acceptance", "repository_name": "${{ github.repository }}", "repository_sha": "${{ github.sha }}"  }}'
