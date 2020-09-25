@@ -19,16 +19,17 @@ jobs:
     - uses: actions/checkout@v2
       with:
         repository: 'tim-brand/pipeline-base'
-        ref: 'v0.1.1'
+        ref: 'v0.1.2'
         path: 'base-actions'
     - run: |
         repo="${github_repo////_}"
         echo "::set-env name=repo::$repo"
       env:
         github_repo: ${{ github.repository }}
-    - uses: ./base-actions/.github/actions/build-module
+    - name: 'Build module trigger'
+      uses: ./base-actions/.github/actions/build-module
       with:
-        event-type: 'integration-test_${{ env.repo }}'
+        type: 'integration-test_${{ env.repo }}'
         environment: 'acceptance'
         repository-name: ${{ github.repository }}
         repository-sha: ${{ github.sha }}
