@@ -16,13 +16,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-#    - uses: actions/checkout@v2
+    - uses: actions/checkout@v2
+      with:
+        repository: 'tim-brand/pipeline-base'
+        ref: 'v0.1.0'
+        path: 'base-actions'
     - run: |
         repo="${github_repo////_}"
         echo "::set-env name=repo::$repo"
       env:
         github_repo: ${{ github.repository }}
-    - uses: ./.github/actions/test
+    - uses: ./base-actions/.github/actions/build-module
       with:
         event-type: 'integration-test_${{ env.repo }}'
         environment: 'acceptance'
