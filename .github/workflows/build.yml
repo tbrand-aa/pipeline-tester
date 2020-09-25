@@ -23,7 +23,7 @@ jobs:
       env:
         github_repo: ${{ github.repository }}
     - id: trigger-action
-        uses: actions/build-trigger-action.yml
+        uses: .github/actions/build-trigger-action.yml
         with:
           event-type: 'integration-test_${{ env.repo }}'
           environment: 'acceptance'
