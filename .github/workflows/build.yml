@@ -32,7 +32,6 @@ jobs:
         type: 'integration-test_${{ env.repo }}'
         environment: 'acceptance'
         repository-name: ${{ github.repository }}
-        repository-sha: ${{ github.sha }}
 #    - run: |
 #        curl \
 #        -XPOST \
