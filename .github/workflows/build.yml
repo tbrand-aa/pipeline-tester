@@ -22,13 +22,12 @@ jobs:
         echo "::set-env name=repo::$repo"
       env:
         github_repo: ${{ github.repository }}
-    - id: trigger-action
-        uses: ./.github/actions/test
-        with:
-          event-type: 'integration-test_${{ env.repo }}'
-          environment: 'acceptance'
-          repository-name: ${{ github.repository }}
-          repository-sha: ${{ github.sha }}
+    - uses: ./.github/actions/test
+      with:
+        event-type: 'integration-test_${{ env.repo }}'
+        environment: 'acceptance'
+        repository-name: ${{ github.repository }}
+        repository-sha: ${{ github.sha }}
 #    - run: |
 #        curl \
 #        -XPOST \
