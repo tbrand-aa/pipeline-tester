@@ -19,7 +19,7 @@ jobs:
     - uses: actions/checkout@v2
       with:
         repository: 'tim-brand/pipeline-base'
-        ref: 'v0.1.2'
+        ref: 'master'
         path: 'base-actions'
     - run: |
         repo="${github_repo////_}"
